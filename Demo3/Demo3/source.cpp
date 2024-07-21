@@ -93,13 +93,12 @@ int main() {
                         break;
                 }
             }
-            if (is_move_up) player_pos.y -= PLAYER_SPEED;
-            if (is_move_down) player_pos.y += PLAYER_SPEED;
-            if (is_move_left) player_pos.x -= PLAYER_SPEED;
-            if (is_move_right) player_pos.x += PLAYER_SPEED;
-
         }
 
+        if (is_move_up) player_pos.y -= PLAYER_SPEED;
+        if (is_move_down) player_pos.y += PLAYER_SPEED;
+        if (is_move_left) player_pos.x -= PLAYER_SPEED;
+        if (is_move_right) player_pos.x += PLAYER_SPEED;
         // 记录当前动画帧一共播放了几个游戏帧数
         static int counter = 0;
         if (++counter % 5 == 0) idx_current_anim++;

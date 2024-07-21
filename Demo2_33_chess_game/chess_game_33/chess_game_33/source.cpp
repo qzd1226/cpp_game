@@ -160,7 +160,7 @@ int main()
 		DWORD end_time = GetTickCount();
 		if(end_time - start_time < 1000/60)
 		{
-			//Sleep(1000 / 60 - (end_time - start_time));
+			Sleep(1000 / 60 - (end_time - start_time));
 		}
 
 	}
