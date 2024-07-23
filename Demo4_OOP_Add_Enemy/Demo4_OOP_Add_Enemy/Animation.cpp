@@ -26,7 +26,7 @@ Animation::~Animation() {
 
 
 #pragma comment(lib, "MSIMG32.LIB")
-inline void putimage_alpha(int x, int y, IMAGE* img) {
+void Animation::putimage_alpha(int x, int y, IMAGE* img) {
 
 	int w = img->getwidth();
 	int h = img->getheight();
@@ -36,11 +36,12 @@ inline void putimage_alpha(int x, int y, IMAGE* img) {
 
 
 void Animation::Play(int x, int y, int delta) {
-	this->timer += delta;
-	std::cout << "timer:" << this->timer << std::endl;
-	if (this->timer >= interval_ms) {
+	
+	Animation::timer += delta;
+
+	if (Animation::timer >= interval_ms) {
 		this->idx_frame = (this->idx_frame + 1) % this->frame_list.size();
-		this->timer = 0;
+		//Animation::timer = 0;
 	}
 	//std::cout << this->frame_list.size() << std::endl;
 	putimage_alpha(x, y, frame_list[idx_frame]);

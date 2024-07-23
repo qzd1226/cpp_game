@@ -12,13 +12,21 @@ public:
 
 	int position_x;
 	int position_y;
+
+
 	std::string getName() const;
 	void setName(std::string name);
 	void setSize(int len, int width);
-	void drawPlayer(int delta, int dir_x, Animation anim_left_player, Animation anim_right_player);
+	void setShadow(IMAGE shadow);
+	IMAGE getShadow();
+	void drawPlayer(int delta, int dir_x, Animation &anim_left_player, Animation &anim_right_player);
+	void drawShadow();
+	int chase(int speed, int target_x, int target_y);
+	
 
 private:
 	std::string name;
 	int length;
 	int width;
+	IMAGE shadow;
 };
