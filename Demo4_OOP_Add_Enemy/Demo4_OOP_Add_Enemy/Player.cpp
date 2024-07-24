@@ -5,6 +5,8 @@
 Player::Player(const std::string& name, int x, int y, IMAGE player_image, IMAGE shadow) : name(name), position_x(x), position_y(y), player_image(player_image), shadow(shadow ) {
 	Player::height = player_image.getheight();
 	Player::width = player_image.getwidth();
+	Player::shadow_height = shadow.getheight();
+	Player::shadow_width = shadow.getwidth();
 }
 
 // Getter for name
@@ -30,23 +32,20 @@ void Player::drawPlayer(int delta, int dir_x, Animation &anim_left_player, Anima
 
 	Player::drawShadow();
 
-	static bool facing_left = false;
 	if (dir_x < 0) {
-		facing_left = true;
+		anim_left_player.Play(position_x, position_y, delta);
 	}
 	else if (dir_x > 0) {
-		facing_left = false;
-	}
-	if (facing_left)
-		anim_left_player.Play(position_x, position_y, delta);
-	else
 		anim_right_player.Play(position_x, position_y, delta);
+	}
 }
 
 void Player::drawShadow() {
 
 	IMAGE img = Player::getShadow();
-	Animation::putimage_alpha(Player::position_x + Player::width/2, Player::position_y + Player::height, &img);
+	int pos_shadow_x = Player::position_x + (Player::width / 2 - Player::shadow_width / 2);
+	int pos_shadow_y = Player::position_y + Player::height - 8;
+	Animation::putimage_alpha(pos_shadow_x, pos_shadow_y, &img);
 
 }
 
@@ -71,7 +70,7 @@ int Player::chase(int speed, int target_x, int target_y) {
 		return 1;
 	}
 }
-
+// update the height and width when we set a new image for player
 void Player::setPlayerImage(IMAGE player) {
 	Player::height = player.getheight();
 	Player::width = player.getwidth();
@@ -82,3 +81,4 @@ void Player::setPlayerImage(IMAGE player) {
 IMAGE Player::getPlayerImage() {
 	return Player::player_image;
 }
+

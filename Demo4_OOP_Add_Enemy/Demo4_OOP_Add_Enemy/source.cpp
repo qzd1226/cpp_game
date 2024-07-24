@@ -29,13 +29,16 @@ int main() {
 
     int pi_dir = 0;
 
-    Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, 45);
-    Animation anim_right_player(_T("twt/img/player_right_%d.png"), 6, 45);
-    Animation anim_left_enemy(_T("twt/img/enemy_left_%d.png"), 6, 45);
-    Animation anim_right_enemy(_T("twt/img/enemy_right_%d.png"), 6, 45);
+    int interval = 10;
+    Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, interval);
+    Animation anim_right_player(_T("twt/img/player_right_%d.png"), 6, interval);
+    Animation anim_left_enemy(_T("twt/img/enemy_left_%d.png"), 6, interval);
+    Animation anim_right_enemy(_T("twt/img/enemy_right_%d.png"), 6, interval);
     
     Player piMeng("PaiMeng",500,500,*anim_left_player.frame_list[0], player_shadow);
     Player enemy1("enemy1", 100, 100, *anim_left_enemy.frame_list[0], enemy_shadow);
+    Player enemy2("enemy1", 200, 200, *anim_left_enemy.frame_list[0], enemy_shadow);
+    Player enemy3("enemy1", 300, 300, *anim_left_enemy.frame_list[0], enemy_shadow);
 
     BeginBatchDraw();
 
@@ -117,7 +120,9 @@ int main() {
         putimage(0, 0, &img_background);
         piMeng.drawPlayer(5, pi_dir, anim_left_player, anim_right_player);
 
-        enemy1.drawPlayer(1, enemy1.chase(1, piMeng.position_x, piMeng.position_y) , anim_left_enemy, anim_right_enemy);
+        enemy1.drawPlayer(1, enemy1.chase(3, piMeng.position_x, piMeng.position_y) , anim_left_enemy, anim_right_enemy);
+        enemy2.drawPlayer(1, enemy2.chase(3, piMeng.position_x, piMeng.position_y), anim_left_enemy, anim_right_enemy);
+        enemy3.drawPlayer(1, enemy3.chase(3, piMeng.position_x, piMeng.position_y), anim_left_enemy, anim_right_enemy);
 
         FlushBatchDraw();
 

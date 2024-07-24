@@ -36,11 +36,12 @@ void Animation::putimage_alpha(int x, int y, IMAGE* img) {
 void Animation::Play(int x, int y, int delta) {
 	
 	Animation::timer += delta;
-
+	std::cout << "idx_frame" << this-> idx_frame << std::endl;
 	if (Animation::timer >= interval_ms) {
 		this->idx_frame = (this->idx_frame + 1) % this->frame_list.size();
+		Animation::timer = 0;
 	}
-	putimage_alpha(x, y, frame_list[idx_frame]);
+	putimage_alpha(x, y, frame_list[this->idx_frame]);
 	}
 
 

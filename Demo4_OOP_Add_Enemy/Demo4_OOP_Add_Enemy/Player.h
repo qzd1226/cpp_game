@@ -30,12 +30,37 @@ public:
 	void drawShadow();
 
 	int chase(int speed, int target_x, int target_y);
-	
+
+	//enum class SpawnEdge
+	//{
+	//	Up = 0,
+	//	Down,
+	//	Left,
+	//	Right
+	//};
+
+	//SpawnEdge edge = (SpawnEdge)(rand() % 4);
+	//switch (edge)
+	//{
+	//case SpawnEdge::Up:
+	//	position_x = rand() % WINDOW_WIDTH;
+	//	position_y = -FRAME_HEIGHT;
+	//	break;
+	//case SpawnEdge::Down:
+	//	position_x = rand() % WINDOW_WIDTH;
+	//	position_y = WINDOW_WIDTH;
+	//	break;
+	//default:
+	//	break;
+	//}
+	//
 
 private:
 	std::string name;
 	int height;
 	int width;
+	int shadow_height;
+	int shadow_width;
 	IMAGE shadow;
 	IMAGE player_image;
 };
