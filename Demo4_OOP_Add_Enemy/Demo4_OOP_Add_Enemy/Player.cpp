@@ -2,7 +2,9 @@
 
 
 // Constructor
-Player::Player(const std::string& name, int x, int y) : name(name), position_x(x), position_y(y) {
+Player::Player(const std::string& name, int x, int y, IMAGE player_image, IMAGE shadow) : name(name), position_x(x), position_y(y), player_image(player_image), shadow(shadow ) {
+	Player::height = player_image.getheight();
+	Player::width = player_image.getwidth();
 }
 
 // Getter for name
@@ -13,11 +15,6 @@ std::string Player::getName() const {
 // Setter for name
 void Player::setName(std::string name) {
 	name = name;
-}
-// Setter for size
-void Player::setSize(int len, int wid) {
-	length = len;
-	width = wid;
 }
 
 // Setter for shadow
@@ -30,6 +27,8 @@ IMAGE Player::getShadow() {
 }
 
 void Player::drawPlayer(int delta, int dir_x, Animation &anim_left_player, Animation &anim_right_player) {
+
+	Player::drawShadow();
 
 	static bool facing_left = false;
 	if (dir_x < 0) {
@@ -47,7 +46,7 @@ void Player::drawPlayer(int delta, int dir_x, Animation &anim_left_player, Anima
 void Player::drawShadow() {
 
 	IMAGE img = Player::getShadow();
-	Animation::putimage_alpha(Player::position_x + 34, Player::position_y + 80, &img);
+	Animation::putimage_alpha(Player::position_x + Player::width/2, Player::position_y + Player::height, &img);
 
 }
 
@@ -71,4 +70,15 @@ int Player::chase(int speed, int target_x, int target_y) {
 	else {
 		return 1;
 	}
+}
+
+void Player::setPlayerImage(IMAGE player) {
+	Player::height = player.getheight();
+	Player::width = player.getwidth();
+	Player::player_image = player;
+	return;
+}
+
+IMAGE Player::getPlayerImage() {
+	return Player::player_image;
 }

@@ -9,14 +9,12 @@ Animation::Animation(LPCTSTR path, int num, int interval)
 	TCHAR path_file[256];
 	for (size_t i = 0; i < num; i++) {
 		_stprintf_s(path_file, path, i);
-
-		//因为是指针所以用new开辟内存
 		IMAGE* frame = new IMAGE();
 		loadimage(frame, path_file);
 		frame_list.push_back(frame);
 	}
 }
-//动画对象的析构函数
+// clear memory 
 Animation::~Animation() {
 	//for (size_t i = 0; i < frame_list.size(); i++) {
 	//	delete frame_list[i];
@@ -41,9 +39,7 @@ void Animation::Play(int x, int y, int delta) {
 
 	if (Animation::timer >= interval_ms) {
 		this->idx_frame = (this->idx_frame + 1) % this->frame_list.size();
-		//Animation::timer = 0;
 	}
-	//std::cout << this->frame_list.size() << std::endl;
 	putimage_alpha(x, y, frame_list[idx_frame]);
 	}
 

@@ -19,6 +19,8 @@ int main() {
 
     IMAGE player_shadow;
     loadimage(&player_shadow, _T("twt/img/shadow_player.png"));
+    IMAGE enemy_shadow;
+    loadimage(&enemy_shadow, _T("twt/img/shadow_enemy.png"));
 
     bool is_move_up = false;
     bool is_move_down = false;
@@ -32,8 +34,8 @@ int main() {
     Animation anim_left_enemy(_T("twt/img/enemy_left_%d.png"), 6, 45);
     Animation anim_right_enemy(_T("twt/img/enemy_right_%d.png"), 6, 45);
     
-    Player piMeng("PaiMeng",500,500);
-    Player enemy1("enemy1", 100, 100);
+    Player piMeng("PaiMeng",500,500,*anim_left_player.frame_list[0], player_shadow);
+    Player enemy1("enemy1", 100, 100, *anim_left_enemy.frame_list[0], enemy_shadow);
 
     BeginBatchDraw();
 
@@ -111,21 +113,18 @@ int main() {
             if (is_move_up) piMeng.position_y -= PLAYER_SPEED;
             if (is_move_down) piMeng.position_y += PLAYER_SPEED;
         }
-        // 记录当前动画帧一共播放了几个游戏帧数
+        
         putimage(0, 0, &img_background);
-        piMeng.setShadow(player_shadow);
-        piMeng.drawPlayer(1, pi_dir, anim_left_player, anim_right_player);
-        piMeng.drawShadow();
+        piMeng.drawPlayer(5, pi_dir, anim_left_player, anim_right_player);
 
-        enemy1.setShadow(player_shadow);
         enemy1.drawPlayer(1, enemy1.chase(1, piMeng.position_x, piMeng.position_y) , anim_left_enemy, anim_right_enemy);
+
         FlushBatchDraw();
 
         DWORD end_time = GetTickCount();
         DWORD delta_time = end_time - start_time;
-        if (delta_time < 1000 / 144) {
-
-            Sleep(1000 / 144 - delta_time);
+        if (delta_time < 1000 / 60) {
+            Sleep(1000 / 60 - delta_time);
         }
 
     }
