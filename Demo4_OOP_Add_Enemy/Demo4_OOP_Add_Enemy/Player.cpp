@@ -43,15 +43,15 @@ void Player::Draw(int delta) {
 	}
 }
 
-void Player::ProcessEvent(ExMessage msg, bool &is_move_up, bool &is_move_down, bool &is_move_left, bool &is_move_right) {
+void Player::ProcessEvent(ExMessage msg) {
 
-    if (is_move_left) {
+    if (Player::is_move_left) {
         Player::direction = false;
-        if (is_move_up) {
+        if (Player::is_move_up) {
             Player::postion_x -= Player::speed / SQUARE_ROOT2;
             Player::postion_y -= Player::speed / SQUARE_ROOT2;
         }
-        else if (is_move_down) {
+        else if (Player::is_move_down) {
             Player::postion_x -= Player::speed / SQUARE_ROOT2;
             Player::postion_y += Player::speed / SQUARE_ROOT2;
         }
@@ -59,13 +59,13 @@ void Player::ProcessEvent(ExMessage msg, bool &is_move_up, bool &is_move_down, b
             Player::postion_x -= Player::speed;
         }
     }
-    else if (is_move_right) {
+    else if (Player::is_move_right) {
         Player::direction = true;
-        if (is_move_up) {
+        if (Player::is_move_up) {
             Player::postion_x += Player::speed / SQUARE_ROOT2;
             Player::postion_y -= Player::speed / SQUARE_ROOT2;
         }
-        else if (is_move_down) {
+        else if (Player::is_move_down) {
             Player::postion_x += Player::speed / SQUARE_ROOT2;
             Player::postion_y += Player::speed / SQUARE_ROOT2;
         }
@@ -74,8 +74,8 @@ void Player::ProcessEvent(ExMessage msg, bool &is_move_up, bool &is_move_down, b
         }
     }
     else {
-        if (is_move_up) Player::postion_y -= Player::speed;
-        if (is_move_down) Player::postion_y += Player::speed;
+        if (Player::is_move_up) Player::postion_y -= Player::speed;
+        if (Player::is_move_down) Player::postion_y += Player::speed;
     }
 }
 

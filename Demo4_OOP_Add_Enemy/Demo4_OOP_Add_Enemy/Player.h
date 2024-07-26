@@ -18,6 +18,10 @@ public:
 	int postion_y;
 	int speed;
 	bool direction;
+	bool is_move_up = false;
+	bool is_move_down = false;
+	bool is_move_left = false;
+	bool is_move_right = false;
 
 	//Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, interval);
 public:
@@ -28,7 +32,7 @@ public:
 
 public:
 	void Draw(int delta);
-	void ProcessEvent(ExMessage msg, bool& is_move_up, bool& is_move_down, bool& is_move_left, bool& is_move_right);
+	void ProcessEvent(ExMessage msg);
 
 
 private:
