@@ -2,12 +2,12 @@
 #include "Animation.h"
 
 
-Animation::Animation(LPCTSTR path, int num, int interval)
+Animation::Animation(LPCTSTR path, int frame_num, int interval)
 {
 	interval_ms = interval;
 
 	TCHAR path_file[256];
-	for (size_t i = 0; i < num; i++) {
+	for (size_t i = 0; i < frame_num; i++) {
 		_stprintf_s(path_file, path, i);
 		IMAGE* frame = new IMAGE();
 		loadimage(frame, path_file);

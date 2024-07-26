@@ -30,7 +30,8 @@ public:
 	bool CheckPlayerCollision(const Player& player);
 
 public:
-	void draw();
+	void Draw(int delta);
+	void Chase(Player player);
 
 public:
 

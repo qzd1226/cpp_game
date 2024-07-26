@@ -3,8 +3,9 @@
 
 #include "Animation.h";
 #include "Player.h";
+#include "Enemy.h";
 
-const int PLAYER_SPEED = 5;
+const int PLAYER_SPEED = 8;
 const double SQUARE_ROOT2 = sqrt(2);
 int main() {
 
@@ -19,8 +20,13 @@ int main() {
 
     IMAGE player_shadow;
     loadimage(&player_shadow, _T("twt/img/shadow_player.png"));
+    IMAGE player_image;
+    loadimage(&player_image, _T("twt/img/player_left_0.png"));
+
     IMAGE enemy_shadow;
     loadimage(&enemy_shadow, _T("twt/img/shadow_enemy.png"));
+    IMAGE enemy_image;
+    loadimage(&enemy_image, _T("twt/img/enemy_left_0.png"));
 
     bool is_move_up = false;
     bool is_move_down = false;
@@ -35,19 +41,21 @@ int main() {
     Animation anim_left_enemy(_T("twt/img/enemy_left_%d.png"), 6, interval);
     Animation anim_right_enemy(_T("twt/img/enemy_right_%d.png"), 6, interval);
     
-    Player piMeng("PaiMeng",500,500,*anim_left_player.frame_list[0], player_shadow);
-    Player enemy1("enemy1", 100, 100, *anim_left_enemy.frame_list[0], enemy_shadow);
-    Player enemy2("enemy1", 200, 200, *anim_left_enemy.frame_list[0], enemy_shadow);
-    Player enemy3("enemy1", 300, 300, *anim_left_enemy.frame_list[0], enemy_shadow);
+
+    Player piMeng("PaiMeng", 500, 500, 7, player_image, player_shadow);
+    //Enemy(const std::string& name, int x, int y, int speed ,IMAGE enemy_image, IMAGE shadow);
+    Enemy enemy1("pig1", 150, 150, 10, enemy_image, enemy_shadow);
+    Enemy enemy2("pig2", 250, 250, 5, enemy_image, enemy_shadow);
+    Enemy enemy3("pig3", 350, 350, 1, enemy_image, enemy_shadow);
 
     BeginBatchDraw();
 
     while (running) {
 
         DWORD start_time = GetTickCount();
+        putimage(0, 0, &img_background);
 
         while (peekmessage(&msg)) {
-
             if (msg.message == WM_KEYDOWN) {
 
                 switch (msg.vkcode) {
@@ -83,46 +91,16 @@ int main() {
                 }
             }
         }
-      
-        if (is_move_left) {
-            pi_dir = -1;
-            if (is_move_up) {
-                piMeng.position_x -= PLAYER_SPEED / SQUARE_ROOT2;
-                piMeng.position_y -= PLAYER_SPEED / SQUARE_ROOT2;
-            }
-            else if (is_move_down) {
-                piMeng.position_x -= PLAYER_SPEED / SQUARE_ROOT2;
-                piMeng.position_y += PLAYER_SPEED / SQUARE_ROOT2;
-            }
-            else {
-                piMeng.position_x -= PLAYER_SPEED;
-            }
-        }
-        else if (is_move_right) {
-            pi_dir = 1;
-            if (is_move_up) {
-                piMeng.position_x += PLAYER_SPEED / SQUARE_ROOT2;
-                piMeng.position_y -= PLAYER_SPEED / SQUARE_ROOT2;
-            }
-            else if (is_move_down) {
-                piMeng.position_x += PLAYER_SPEED / SQUARE_ROOT2;
-                piMeng.position_y += PLAYER_SPEED / SQUARE_ROOT2;
-            }
-            else {
-                piMeng.position_x += PLAYER_SPEED;
-            }
-        }
-        else {
-            if (is_move_up) piMeng.position_y -= PLAYER_SPEED;
-            if (is_move_down) piMeng.position_y += PLAYER_SPEED;
-        }
-        
-        putimage(0, 0, &img_background);
-        piMeng.drawPlayer(5, pi_dir, anim_left_player, anim_right_player);
+        piMeng.ProcessEvent(msg, is_move_up, is_move_down, is_move_left, is_move_right);
+        piMeng.Draw(5);
 
-        enemy1.drawPlayer(1, enemy1.chase(3, piMeng.position_x, piMeng.position_y) , anim_left_enemy, anim_right_enemy);
-        enemy2.drawPlayer(1, enemy2.chase(3, piMeng.position_x, piMeng.position_y), anim_left_enemy, anim_right_enemy);
-        enemy3.drawPlayer(1, enemy3.chase(3, piMeng.position_x, piMeng.position_y), anim_left_enemy, anim_right_enemy);
+        enemy1.Chase(piMeng);
+        enemy2.Chase(piMeng);
+        enemy3.Chase(piMeng);
+          
+        enemy1.Draw(3);
+        enemy2.Draw(3);
+        enemy3.Draw(3);
 
         FlushBatchDraw();
 

@@ -4,63 +4,44 @@
 #include <graphics.h>
 #include "Animation.h"
 
-class Player {
-
+class Player
+{
 public:
 	// Constructor
-	Player(const std::string& name, int x, int y, IMAGE player_image, IMAGE shadow);
+	Player(const std::string& name, int x, int y, int speed, IMAGE enemy_image, IMAGE shadow);
 
-	int position_x;
-	int position_y;
+public:
 
-	std::string getName() const;
+	Animation left_anim;
+	Animation right_anim;
+	int postion_x;
+	int postion_y;
+	int speed;
+	bool direction;
 
-	void setName(std::string name);
+	//Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, interval);
+public:
+	void SetLeftAnim(std::string url, int frame_num, int interval);
+	void SetRightAnim(std::string url, int frame_num, int interval);
 
-	void setShadow(IMAGE shadow);
+	//bool CheckBullectCollision(const Bullet& bullet);
 
-	void setPlayerImage(IMAGE player_image);
+public:
+	void Draw(int delta);
+	void ProcessEvent(ExMessage msg, bool& is_move_up, bool& is_move_down, bool& is_move_left, bool& is_move_right);
 
-	IMAGE getPlayerImage();
-
-	IMAGE getShadow();
-
-	void drawPlayer(int delta, int dir_x, Animation &anim_left_player, Animation &anim_right_player);
-
-	void drawShadow();
-
-	int chase(int speed, int target_x, int target_y);
-
-	//enum class SpawnEdge
-	//{
-	//	Up = 0,
-	//	Down,
-	//	Left,
-	//	Right
-	//};
-
-	//SpawnEdge edge = (SpawnEdge)(rand() % 4);
-	//switch (edge)
-	//{
-	//case SpawnEdge::Up:
-	//	position_x = rand() % WINDOW_WIDTH;
-	//	position_y = -FRAME_HEIGHT;
-	//	break;
-	//case SpawnEdge::Down:
-	//	position_x = rand() % WINDOW_WIDTH;
-	//	position_y = WINDOW_WIDTH;
-	//	break;
-	//default:
-	//	break;
-	//}
-	//
 
 private:
 	std::string name;
-	int height;
-	int width;
-	int shadow_height;
+	int frame_num;
+	int interval;
+
+	int image_width;
+	int image_height;
+
 	int shadow_width;
+	int shadow_height;
+
 	IMAGE shadow;
-	IMAGE player_image;
+	IMAGE enemy_image;
 };
