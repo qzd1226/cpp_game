@@ -31,19 +31,9 @@ int main() {
     bool is_move_up = false;
     bool is_move_down = false;
     bool is_move_left = false;
-    bool is_move_right = false;
-
-    int pi_dir = 0;
-
-    int interval = 10;
-    Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, interval);
-    Animation anim_right_player(_T("twt/img/player_right_%d.png"), 6, interval);
-    Animation anim_left_enemy(_T("twt/img/enemy_left_%d.png"), 6, interval);
-    Animation anim_right_enemy(_T("twt/img/enemy_right_%d.png"), 6, interval);
-    
+    bool is_move_right = false;    
 
     Player piMeng("PaiMeng", 500, 500, 7, player_image, player_shadow);
-    //Enemy(const std::string& name, int x, int y, int speed ,IMAGE enemy_image, IMAGE shadow);
     Enemy enemy1("pig1", 150, 150, 10, enemy_image, enemy_shadow);
     Enemy enemy2("pig2", 250, 250, 5, enemy_image, enemy_shadow);
     Enemy enemy3("pig3", 350, 350, 1, enemy_image, enemy_shadow);
@@ -106,8 +96,8 @@ int main() {
 
         DWORD end_time = GetTickCount();
         DWORD delta_time = end_time - start_time;
-        if (delta_time < 1000 / 60) {
-            Sleep(1000 / 60 - delta_time);
+        if (delta_time < 1000 / 144) {
+            Sleep(1000 / 144 - delta_time);
         }
 
     }
