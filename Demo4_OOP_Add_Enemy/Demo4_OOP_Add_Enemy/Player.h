@@ -3,6 +3,7 @@
 #include <string>
 #include <graphics.h>
 #include "Animation.h"
+#include "Bullet.h"
 
 class Player
 {
@@ -22,6 +23,7 @@ public:
 	bool is_move_down = false;
 	bool is_move_left = false;
 	bool is_move_right = false;
+	std::vector<Bullet*> bullet_list;
 
 	//Animation anim_left_player(_T("twt/img/player_left_%d.png"), 6, interval);
 public:

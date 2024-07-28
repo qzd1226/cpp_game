@@ -11,10 +11,12 @@ Player::Player(const std::string& name, int x, int y, int speed, IMAGE player_im
 	Player::enemy_image = enemy_image;
 	Player::shadow = shadow;
 
-	Player::image_height = enemy_image.getheight();
-	Player::image_width = enemy_image.getwidth();
+	Player::image_height = player_image.getheight();
+	Player::image_width = player_image.getwidth();
 	Player::shadow_height = shadow.getheight();
 	Player::shadow_width = shadow.getwidth();
+
+    Player::bullet_list.push_back(new Bullet());
 
 	const int interval = 30;
 	Animation anim_left(_T("twt/img/player_left_%d.png"), 6, interval);
@@ -41,6 +43,10 @@ void Player::Draw(int delta) {
 	else {
 		Player::right_anim.Play(Player::postion_x, Player::postion_y, delta);
 	}
+    for (size_t i = 0; i < bullet_list.size(); ++i) {
+        bullet_list[i]->Draw();
+        bullet_list[i]->updateOrbitPosition(Player::postion_x + Player::image_width/2, Player::postion_y + Player::image_height/2);
+    }
 }
 
 void Player::ProcessEvent(ExMessage msg) {
