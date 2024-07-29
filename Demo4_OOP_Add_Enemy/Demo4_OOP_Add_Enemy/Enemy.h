@@ -25,6 +25,7 @@ public:
 public:
 	void SetLeftAnim(std::string url, int frame_num, int interval);
 	void SetRightAnim(std::string url, int frame_num, int interval);
+	void Spawn(int background_height, int background_width);
 
 	bool CheckBullectCollision(const Bullet& bullet);
 	bool CheckPlayerCollision(const Player& player);
@@ -34,7 +35,7 @@ public:
 	void Chase(Player player);
 
 public:
-
+	~Enemy(); 
 	//~Enemy() {
 	//	delete this->left_anim;
 	//	delete this->right_anim;

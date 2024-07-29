@@ -8,6 +8,8 @@
 
 const int PLAYER_SPEED = 8;
 const double SQUARE_ROOT2 = sqrt(2);
+int BACKGROUND_WIDTH = 0;
+int BACKGROUND_HEIGHT = 0;
 
 void TryGenerateEnemy(std::vector<Enemy*>& enemy_list, IMAGE enemy_image, IMAGE enemy_shadow ) {
     const int INTERVAL = 100;
@@ -18,8 +20,11 @@ void TryGenerateEnemy(std::vector<Enemy*>& enemy_list, IMAGE enemy_image, IMAGE 
     std::mt19937 gen(rd()); //
     std::uniform_int_distribution<> dis(1, 4);
     int random_speed = dis(gen);
-    if ((++counter) % INTERVAL == 0)
-        enemy_list.push_back(new Enemy("pig", 150, 150, random_speed, enemy_image, enemy_shadow));
+    if ((++counter) % INTERVAL == 0) {
+        Enemy* new_enemy = new Enemy("pig", 150, 150, random_speed, enemy_image, enemy_shadow);
+        new_enemy->Spawn(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        enemy_list.push_back(new_enemy);
+    }
 }
 int main() {
 
@@ -31,6 +36,9 @@ int main() {
 
     IMAGE img_background;
     loadimage(&img_background, _T("twt/img/background.png"));
+
+    BACKGROUND_WIDTH = img_background.getwidth();
+    BACKGROUND_HEIGHT = img_background.getheight();
 
     IMAGE player_shadow;
     loadimage(&player_shadow, _T("twt/img/shadow_player.png"));
@@ -48,9 +56,6 @@ int main() {
     bool is_move_right = false;    
 
     Player piMeng("PaiMeng", 500, 500, 7, player_image, player_shadow);
-    Enemy enemy1("pig1", 150, 150, 10, enemy_image, enemy_shadow);
-    Enemy enemy2("pig2", 250, 250, 5, enemy_image, enemy_shadow);
-    Enemy enemy3("pig3", 350, 350, 1, enemy_image, enemy_shadow);
     
     std::vector<Enemy*> enemy_list;
     BeginBatchDraw();
@@ -100,18 +105,22 @@ int main() {
         piMeng.Draw(5);
 
         TryGenerateEnemy(enemy_list, enemy_image, enemy_shadow);
-        for (Enemy* enemy : enemy_list)
+        for (auto it = enemy_list.begin(); it != enemy_list.end();) {
+            Enemy* enemy = *it;
             enemy->Chase(piMeng);
-        //enemy1.Chase(piMeng);
-        //enemy2.Chase(piMeng);
-        //enemy3.Chase(piMeng);
-        
-        for (Enemy* enemy : enemy_list)
             enemy->Draw(5);
-        //enemy1.Draw(3);
-        //enemy2.Draw(3);
-        //enemy3.Draw(3);
-
+            for (Bullet* bullet : piMeng.bullet_list) {
+                if (enemy->CheckBullectCollision(*bullet)) {
+                    it = enemy_list.erase(it);
+                    enemy->~Enemy();
+                    break;
+                }
+                else {
+                    ++it;
+                }
+            }
+        }
+       
         FlushBatchDraw();
 
         DWORD end_time = GetTickCount();

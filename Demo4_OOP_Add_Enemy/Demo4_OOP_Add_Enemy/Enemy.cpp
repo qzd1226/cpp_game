@@ -1,3 +1,4 @@
+#include <random>
 #include "Enemy.h"
 #include "Animation.h"
 
@@ -24,8 +25,40 @@ Enemy::Enemy(const std::string& name, int x, int y, int speed, IMAGE enemy_image
 
 }
 
+void Enemy::Spawn(int background_width, int background_height)
+{
+	std::random_device rd;  
+	std::mt19937 gen(rd());  
+	std::uniform_int_distribution<> distrib(0, 3);
+
+	int random_edge = distrib(gen);
+	if (random_edge == 0) {
+		postion_x = - image_width;
+		std::uniform_int_distribution<> dist0towidth(0, background_height);
+		postion_y = dist0towidth(gen);
+	}
+	else if (random_edge == 1) {
+		postion_x = background_width;
+		std::uniform_int_distribution<> dist0towidth(0, background_height);
+		postion_y = dist0towidth(gen);
+	}
+	else if (random_edge == 2) {
+		postion_y = 0 - image_height;
+		std::uniform_int_distribution<> dist0towidth(0, background_width);
+		postion_x = dist0towidth(gen);
+	}
+	else if (random_edge == 3) {
+		postion_y = background_height;
+		std::uniform_int_distribution<> dist0towidth(0, background_width);
+		postion_x = dist0towidth(gen);
+	}
+	return;
+}
+
 bool Enemy::CheckBullectCollision(const Bullet& bullet) {
-	return false;
+	bool is_overlay_x = bullet.position_x >= postion_x && bullet.position_x <= postion_x + image_width;
+	bool is_overlay_y = bullet.position_y >= postion_y && bullet.position_y <= postion_y + image_height;
+	return is_overlay_x && is_overlay_y;
 }
 
 bool Enemy::CheckPlayerCollision(const Player& player) {
@@ -69,4 +102,9 @@ void Enemy::Chase(Player player) {
 	else {
 		Enemy::direction = true;
 	}
+}
+
+Enemy::~Enemy()
+{
+
 }
