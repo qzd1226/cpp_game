@@ -1,11 +1,8 @@
 #include <iostream>
 #include "Animation.h"
 
-
-Animation::Animation(LPCTSTR path, int frame_num, int interval)
+Anim::Anim(LPCTSTR path, int frame_num)
 {
-	interval_ms = interval;
-
 	TCHAR path_file[256];
 	for (size_t i = 0; i < frame_num; i++) {
 		_stprintf_s(path_file, path, i);
@@ -13,6 +10,19 @@ Animation::Animation(LPCTSTR path, int frame_num, int interval)
 		loadimage(frame, path_file);
 		frame_list.push_back(frame);
 	}
+}
+
+Anim::~Anim() {
+	for (size_t i = 0; i < frame_list.size(); i++) {
+		delete frame_list[i];
+	}
+}
+
+Animation::Animation(Anim* anim ,int frame_num, int interval)
+{
+	interval_ms = interval;
+	Animation::enemy_anim = anim;
+	
 }
 // clear memory 
 Animation::~Animation() {
@@ -34,14 +44,13 @@ void Animation::putimage_alpha(int x, int y, IMAGE* img) {
 
 
 void Animation::Play(int x, int y, int delta) {
-	
 	Animation::timer += delta;
 	std::cout << "idx_frame" << this-> idx_frame << std::endl;
 	if (Animation::timer >= interval_ms) {
-		this->idx_frame = (this->idx_frame + 1) % this->frame_list.size();
+		this->idx_frame = (this->idx_frame + 1) % enemy_anim->frame_list.size();
 		Animation::timer = 0;
 	}
-	putimage_alpha(x, y, frame_list[this->idx_frame]);
+	putimage_alpha(x, y, enemy_anim->frame_list[this->idx_frame]);
 	}
 
 

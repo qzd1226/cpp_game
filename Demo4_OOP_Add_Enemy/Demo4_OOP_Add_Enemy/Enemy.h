@@ -10,7 +10,7 @@ class Enemy
 {
 public:
 	// Constructor
-	Enemy(const std::string& name, int x, int y, int speed ,IMAGE enemy_image, IMAGE shadow);
+	Enemy(const std::string& name, int x, int y, int speed ,IMAGE enemy_image, IMAGE shadow, Anim* player_anim_left, Anim* player_anim_right);
 
 public:
 
@@ -54,6 +54,7 @@ private:
 
 	IMAGE shadow;
 	IMAGE enemy_image;
+	
 
 
 };

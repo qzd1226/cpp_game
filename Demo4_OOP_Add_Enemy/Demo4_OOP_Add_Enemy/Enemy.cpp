@@ -4,7 +4,7 @@
 
 
 
-Enemy::Enemy(const std::string& name, int x, int y, int speed, IMAGE enemy_image, IMAGE shadow){
+Enemy::Enemy(const std::string& name, int x, int y, int speed, IMAGE enemy_image, IMAGE shadow, Anim* enemy_anim_left, Anim* enemy_anim_right){
 	Enemy::name = name;
 	Enemy::postion_x = x;
 	Enemy::postion_y = y;
@@ -18,8 +18,9 @@ Enemy::Enemy(const std::string& name, int x, int y, int speed, IMAGE enemy_image
 	Enemy::shadow_width = shadow.getwidth();
 
 	const int interval = 30;
-	Animation anim_left(_T("twt/img/enemy_left_%d.png"), 6, interval);
-	Animation anim_right(_T("twt/img/enemy_right_%d.png"), 6, interval);
+	Animation anim_left(enemy_anim_left, 6, interval);
+	Animation anim_right(enemy_anim_right, 6, interval);
+
 	Enemy::left_anim = anim_left;
 	Enemy::right_anim = anim_right;
 

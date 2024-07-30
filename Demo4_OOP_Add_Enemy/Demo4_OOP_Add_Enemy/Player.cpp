@@ -3,7 +3,7 @@
 #include "Enemy.h";
 
 const double SQUARE_ROOT2 = sqrt(2);
-Player::Player(const std::string& name, int x, int y, int speed, IMAGE player_image, IMAGE player_shadow) {
+Player::Player(const std::string& name, int x, int y, int speed, IMAGE player_image, IMAGE player_shadow, Anim* player_anim_left, Anim* player_anim_right) {
 	Player::name = name;
 	Player::postion_x = x;
 	Player::postion_y = y;
@@ -19,8 +19,10 @@ Player::Player(const std::string& name, int x, int y, int speed, IMAGE player_im
     Player::bullet_list.push_back(new Bullet());
 
 	const int interval = 30;
-	Animation anim_left(_T("twt/img/player_left_%d.png"), 6, interval);
-	Animation anim_right(_T("twt/img/player_right_%d.png"), 6, interval);
+    Animation anim_left(player_anim_left, 6, interval);
+    Animation anim_right(player_anim_right, 6, interval);
+	//Animation anim_left(_T("twt/img/player_left_%d.png"), 6, interval);
+	//Animation anim_right(_T("twt/img/player_right_%d.png"), 6, interval);
 	Player::left_anim = anim_left;
 	Player::right_anim = anim_right;
 

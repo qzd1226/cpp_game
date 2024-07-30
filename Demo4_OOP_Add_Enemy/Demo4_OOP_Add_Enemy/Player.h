@@ -9,7 +9,7 @@ class Player
 {
 public:
 	// Constructor
-	Player(const std::string& name, int x, int y, int speed, IMAGE enemy_image, IMAGE shadow);
+	Player(const std::string& name, int x, int y, int speed, IMAGE enemy_image, IMAGE shadow, Anim* player_anim_left, Anim* player_anim_right);
 
 public:
 
