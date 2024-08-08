@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include "Scene.h"
+#include "SceneManager.h"
+
+extern SceneManager scene_manager;
 
 class GameScene : public Scene
 {
@@ -19,6 +22,10 @@ public:
 	}
 	void on_input(const ExMessage& msg) {
 		std::cout << "game: input message:" << &msg << std::endl;
+		if (msg.message == WM_KEYDOWN)
+		{
+			scene_manager.switch_to(SceneManager::SceneType::Menu);
+		}
 	}
 	void on_exit() {
 		std::cout << "exiting game scene" << std::endl;
