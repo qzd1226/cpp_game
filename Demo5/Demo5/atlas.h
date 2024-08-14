@@ -19,6 +19,7 @@ public:
 			loadimage(&img_list[i], path_file);
 		}
 	}
+
 	void clear() {
 		img_list.clear();
 	}

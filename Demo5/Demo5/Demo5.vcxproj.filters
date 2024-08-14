@@ -36,6 +36,9 @@
     <ClInclude Include="atlas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -56,7 +59,7 @@
     <ClCompile Include="SelectorScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Atlaas.cpp">
+    <ClCompile Include="Atlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
