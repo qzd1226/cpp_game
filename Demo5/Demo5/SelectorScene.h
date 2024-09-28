@@ -87,12 +87,52 @@ public:
 	void on_update(int delta) {
 		animation_peashooter.on_update(delta);
 		animation_sunflower.on_update(delta);
+
+		selector_background_scorll_offset_x += 5;
+		if (selector_background_scorll_offset_x >= img_peashooter_selector_background_left.getwidth())
+			selector_background_scorll_offset_x = 0;
 	}
 
 	void on_draw(const Camera& camera) {
 
 		printf("on draw");
+
+		IMAGE* img_p1_selector_background = nullptr;
+		IMAGE* img_p2_selector_background = nullptr;
+
+		switch (player_type_1)
+		{
+		case PlayerType::Peashooter:
+			img_p1_selector_background = &img_peashooter_selector_background_right;
+			break;
+		case PlayerType::Sunflower:
+			img_p1_selector_background = &img_sunflower_selector_background_right;
+			break;
+		default:
+			img_p1_selector_background = &img_peashooter_selector_background_right;
+			break;
+		}
+		switch (player_type_2)
+		{
+		case PlayerType::Peashooter:
+			img_p2_selector_background = &img_peashooter_selector_background_right;
+			break;
+		case PlayerType::Sunflower:
+			img_p2_selector_background = &img_sunflower_selector_background_right;
+			break;
+		default:
+			img_p2_selector_background = &img_peashooter_selector_background_right;
+			break;
+		}
+
 		putimage(0, 0, &img_selector_background);
+
+		putimage_alpha(selector_background_scorll_offset_x - img_p1_selector_background->getwidth(), 0, img_p1_selector_background);
+		putimage_alpha(selector_background_scorll_offset_x, 0,
+			img_p1_selector_background->getwidth() - selector_background_scorll_offset_x, 0, img_p1_selector_background, 0, 0);
+		putimage_alpha(getwidth() - img_p2_selector_background->getwidth(), 0,
+			img_p2_selector_background->getwidth() - selector_background_scorll_offset_x, 0, img_p2_selector_background, selector_background_scorll_offset_x, 0);
+		putimage_alpha(getwidth() - selector_background_scorll_offset_x, 0, img_p2_selector_background);
 
 		putimage_alpha(camera, pos_img_VS.x, pos_img_VS.y, &img_VS);
 
@@ -169,6 +209,7 @@ private:
 	LPCTSTR str_peashooter_name = _T("豌豆射手");
 	LPCTSTR str_sunflower_name = _T("向日葵");
 
+	int selector_background_scorll_offset_x = 0;      // background board rolling dist
 private:
 	void outtextxy_shaded(int x, int y, LPCTSTR str) {
 		settextcolor(RGB(45, 45, 45));

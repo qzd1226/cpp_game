@@ -28,6 +28,22 @@ inline void putimage_alpha(const Camera& camera ,int dst_x, int dst_y, IMAGE* im
 	AlphaBlend(GetImageHDC(GetWorkingImage()), (int)(dst_x - pos_camera.x), (int)(dst_y - pos_camera.y), w, h, GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
 }
 
+inline void putimage_alpha(int dst_x, int dst_y, int width , int height, IMAGE* img, int src_x, int src_y) {
+	int w = width > 0 ? width : img->getwidth();
+	int h = height > 0 ? height : img->getheight();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+		GetImageHDC(img), src_x, src_y, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
+}
+
+inline void putimage_alpha(int dst_x, int dst_y, IMAGE* img) {
+	int w = img->getwidth();
+	int h = img->getheight();
+	int src_x = 0;
+	int src_y = 0;
+	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+		GetImageHDC(img), src_x, src_y, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
+}
+
 class util
 {
 };
