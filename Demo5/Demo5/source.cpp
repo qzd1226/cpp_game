@@ -7,7 +7,7 @@
 #include "util.h"
 
 #include <windows.h>
-
+#pragma comment(lib, "Winmm.lib")
 IMAGE img_menu_background;         // main menu background
 
 IMAGE img_VS;                      // VS art character
@@ -81,6 +81,8 @@ IMAGE img_avatar_sunflower;
 Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
+
+Camera main_camera;
 
 void flip_atlas(Atlas& src, Atlas& dst) {
 	dst.clear();
@@ -190,14 +192,24 @@ int main() {
 
 	scene_manager.set_current_scene(menu_scene);
 	load_game_resources(); 
+	initgraph(1280, 720, EW_SHOWCONSOLE);
+	
+	settextstyle(28, 0, _T("IPix"));
+	setbkmode(TRANSPARENT);
 	while (true) {
 		DWORD frame_start_time = GetTickCount();
 
 		while (peekmessage(&msg)) {
 			scene_manager.on_input(msg);
 		}
+		static DWORD last_tick_time = GetTickCount();
+		DWORD current_tick_time = GetTickCount();
+		DWORD delta_tick = current_tick_time - last_tick_time;
+		scene_manager.on_update(delta_tick);
+		last_tick_time = current_tick_time;
+
 		cleardevice();
-		scene_manager.on_draw();
+		scene_manager.on_draw(main_camera);
 		FlushBatchDraw();
 
 		DWORD frame_end_time = GetTickCount();

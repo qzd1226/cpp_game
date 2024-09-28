@@ -1,8 +1,15 @@
 #pragma once
 #include "Scene.h"
 #include "SceneManager.h"
+#include "animation.h"
+#include "atlas.h"
+#include "camera.h"
+#include "timer.h"
 
 #include <iostream>
+
+extern IMAGE img_menu_background;
+extern Atlas atlas_peashooter_run_right;
 
 extern SceneManager scene_manager;
 class MenuScene : public Scene
@@ -13,27 +20,29 @@ public:
 	~MenuScene() = default;
 
 	void on_enter() {
-		std::cout << "enter main menu" << std::endl;
+
+		mciSendString(_T("play bgm_menu repeat from 0"), NULL, 0, NULL);
 	}
-	void on_update() {
-		std::cout << "updating enter main menu" << std::endl;
+	void on_update(int delta) {
+		
 	}
-	void on_draw() {
-		std::cout << "drawing main menu" << std::endl;
+	void on_draw(const Camera& camera) {
+		putimage(0, 0, &img_menu_background);
 	}
 	void on_input(const ExMessage& msg) {
-		//std::cout << "input message:" << &msg << std::endl;
-		if (msg.message == WM_KEYDOWN)
-		{
-			scene_manager.switch_to(SceneManager::SceneType::Game);
+		if (msg.message == WM_KEYUP) {
+			mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+			scene_manager.switch_to(SceneManager::SceneType::Selector);
 		}
 	}
 	void on_exit() {
-		std::cout << "exiting main menu" << std::endl;
+		
 	}
 
 
 private:
-
+	Animation animation_peashooter_run_right;
+	Camera camera;
+	Timer timer;
 };
 

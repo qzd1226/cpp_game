@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "camera.h"
 
 extern Scene* menu_scene;
 extern Scene* game_scene;
@@ -38,12 +39,12 @@ public:
 		current_scene-> on_enter();
 	}
 
-	void on_update() {
-		current_scene->on_update();
+	void on_update(int delta) {
+		current_scene->on_update(delta);
 	}
 
-	void on_draw() {
-		current_scene->on_draw();
+	void on_draw(const Camera& camera) {
+		current_scene->on_draw(camera);
 	}
 
 	void on_input(const  ExMessage& msg) {

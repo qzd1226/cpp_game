@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Scene.h"
 #include "SceneManager.h"
+#include "camera.h"
 
 extern SceneManager scene_manager;
 
@@ -14,10 +15,10 @@ public:
 	void on_enter() {
 		std::cout << "enter game scene" << std::endl;
 	}
-	void on_update() {
+	void on_update(int delta) {
 		std::cout << "game is running" << std::endl;
 	}
-	void on_draw() {
+	void on_draw(const Camera& camera) {
 		outtextxy(10, 10, _T("Draw game scene"));
 	}
 	void on_input(const ExMessage& msg) {
