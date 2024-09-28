@@ -139,7 +139,7 @@ void load_game_resources() {
 	atlas_peashooter_die_right.load_from_file(_T("pvz/resources/peashooter_die_%d.png"), 4);
 	flip_atlas(atlas_peashooter_die_right, atlas_peashooter_die_left);
 
-	atlas_sunflower_idle_right.load_from_file(_T("pvz/resources/sunflower_idle_%d.png"), 9);
+	atlas_sunflower_idle_right.load_from_file(_T("pvz/resources/sunflower_idle_%d.png"), 8);
 	flip_atlas(atlas_sunflower_idle_right, atlas_sunflower_idle_left);
 	atlas_sunflower_run_right.load_from_file(_T("pvz/resources/sunflower_run_%d.png"), 5);
 	flip_atlas(atlas_sunflower_run_right, atlas_sunflower_run_left);

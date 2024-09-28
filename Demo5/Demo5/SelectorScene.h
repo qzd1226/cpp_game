@@ -71,6 +71,8 @@ public:
 		pos_animation_2P.y = pos_animation_1P.y;
 		pos_img_1P_name.y = pos_animation_1P.y + 155;
 		pos_img_2P_name.y = pos_img_1P_name.y;
+		pos_img_1P_name.x = pos_animation_1P.x;
+		pos_img_2P_name.x = pos_animation_2P.x;
 		pos_1P_selector_btn_left.x = pos_img_1P_gravestone.x - img_1P_selector_btn_idle_left.getwidth();
 		pos_1P_selector_btn_left.y = pos_img_1P_gravestone.y + (img_gravestone_right.getheight() - img_1P_selector_btn_idle_left.getheight()) / 2;
 		pos_1P_selector_btn_right.x = pos_img_1P_gravestone.x + img_gravestone_right.getwidth();
@@ -107,8 +109,8 @@ public:
 				break;
 			case PlayerType::Sunflower:
 				animation_sunflower.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
-		}		outtextxy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_sunflower_name);
-
+				outtextxy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_sunflower_name);
+		}
 		switch (player_type_2) {
 		case PlayerType::Peashooter:
 			animation_peashooter.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
@@ -126,7 +128,7 @@ public:
 	}
 
 	void on_input() {
-
+	
 	}
 
 	void on_exit() {
