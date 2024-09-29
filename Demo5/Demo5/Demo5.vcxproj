@@ -24,6 +24,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="platfrom.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SelectorScene.h" />
