@@ -5,8 +5,11 @@
 #include "camera.h"
 #include "platfrom.h"
 #include <vector>
+#include "peashooter_player.h"
+#include "sunflower_player.h"
 
 #include "util.h"
+
 
 extern IMAGE img_sky;
 extern IMAGE img_hills;
@@ -19,7 +22,8 @@ extern std::vector<Platform> platform_list;
 
 extern SceneManager scene_manager;
 
-
+extern Player* player_1;
+extern Player* player_2;
 
 class GameScene : public Scene
 {
@@ -33,6 +37,9 @@ public:
 
 	void on_enter() {
 		
+		player_1->set_position(200, 50);
+		player_2->set_position(975, 50);
+
 		pos_img_sky.x = (getwidth() - img_sky.getwidth()) / 2;
 		pos_img_sky.y = (getwidth() - img_sky.getheight()) / 2;
 
@@ -73,6 +80,9 @@ public:
 		small_platform_3.shape.y = (float)small_platform_3.render_position.y + img_platform_small.getheight() / 2;
 	}
 	void on_update(int delta) {
+
+		player_1->on_update(delta);
+		player_2->on_update(delta);
 		
 	}
 	void on_draw(const Camera& camera) {
@@ -88,8 +98,13 @@ public:
 			settextcolor(RGB(255, 0, 0));
 			outtextxy(15, 15, _T("Debug Mode, Press 'Q' to exit"));
 		}
+		player_1->on_draw(camera);
+		player_2->on_draw(camera);
 	}
 	void on_input(const ExMessage& msg) {
+
+		player_1->on_input(msg);
+		player_2->on_input(msg);
 		switch (msg.message) 
 		{
 		case WM_KEYUP:

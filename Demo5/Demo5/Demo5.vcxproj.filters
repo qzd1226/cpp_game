@@ -16,6 +16,9 @@
     <Filter Include="Header Files\scene">
       <UniqueIdentifier>{710ca70d-5505-4897-8922-b9b94401f2dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\player">
+      <UniqueIdentifier>{8855f276-3b67-483d-83cb-bde0e18b9caf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -53,6 +56,18 @@
     </ClInclude>
     <ClInclude Include="platfrom.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="peashooter_player.h">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="sunflower_player.h">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="player_id.h">
+      <Filter>Header Files\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
