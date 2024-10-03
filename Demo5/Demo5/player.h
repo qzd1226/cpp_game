@@ -3,8 +3,13 @@
 #include "vector2.h"
 #include "animation.h"
 #include "player_id.h"
+#include "platfrom.h"
+#include <vector>
 
 #include <graphics.h>
+
+extern std::vector<Platform> platform_list;
+
 class Player
 {
 public:
@@ -21,6 +26,8 @@ public:
 
 			is_facing_right = direction > 0;
 			current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
+			float distance = direction * run_velocity * delta;
+			on_run(distance);
 		}
 		else
 		{
@@ -28,11 +35,25 @@ public:
 		}
 		
 		current_animation->on_update(delta);
+
+		move_and_collide(delta);
 	}
 
 	virtual void on_draw(const Camera& camera) {
 
 		current_animation->on_draw(camera, (int)position.x, (int)position.y);
+	}
+
+	virtual void on_run(float distance) {
+		position.x += distance;
+	}
+
+	virtual void on_jump()
+	{
+		if (velocity.y != 0) {
+			return;
+		}
+		velocity.y += jump_velocity;
 	}
 
 	virtual void on_input(const ExMessage& msg) {
@@ -52,6 +73,10 @@ public:
 				case 0x44:
 					is_right_key_down = true;
 					break;
+					//'W'
+				case 0x57:
+					on_jump();
+					break;
 				}
 				break;
 			case PlayerID::P2:
@@ -63,6 +88,10 @@ public:
 					//'->'
 				case VK_RIGHT:
 					is_right_key_down = true;
+					break;
+					//'up'
+				case VK_UP:
+					on_jump();
 					break;
 				}
 				break;
@@ -108,7 +137,44 @@ public:
 		position.y = y;
 	}
 protected:
+	void move_and_collide(int delta)
+	{
+		velocity.y += gravity * delta;
+		position += velocity * (float)delta;
+
+		if (velocity.y > 0) {
+			for (const Platform& platform : platform_list) {
+
+				const Platform::CollisionShape& shape = platform.shape;
+				bool is_collide_x = (max(position.x + size.x, shape.right) - min(position.x, shape.left)
+					<= size.x + (shape.right - shape.left));
+
+				bool is_collide_y = (shape.y >= position.y && shape.y <= position.y + size.y);
+				if (is_collide_x && is_collide_y) 
+{
+					float delta_pos_y = velocity.y * delta;
+					float last_tick_foot_pos_y = position.y + size.y - delta_pos_y;  // if player pass the platform in the last frame
+					if (last_tick_foot_pos_y <= shape.y) {
+
+						position.y = shape.y - size.y;
+						velocity.y = 0;
+
+						break;
+					}
+				}	
+
+			}
+		}
+	}
+
+protected:
+	Vector2 size;          //player size
 	Vector2 position;
+	Vector2 velocity;
+
+	const float run_velocity = 0.55f; 
+	const float jump_velocity = -0.85f;
+	const float gravity = 1.6e-3f; 
 
 	Animation animation_idle_left;
 	Animation animation_idle_right;
