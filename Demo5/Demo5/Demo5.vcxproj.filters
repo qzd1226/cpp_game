@@ -19,6 +19,9 @@
     <Filter Include="Header Files\player">
       <UniqueIdentifier>{8855f276-3b67-483d-83cb-bde0e18b9caf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\bullet">
+      <UniqueIdentifier>{f2b2515e-2598-4a6c-9e63-5a589205321a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -68,6 +71,18 @@
     </ClInclude>
     <ClInclude Include="player_id.h">
       <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Header Files\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="pea_bullet.h">
+      <Filter>Header Files\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sun_bullet.h">
+      <Filter>Header Files\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sun_bullet_ex.h">
+      <Filter>Header Files\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
