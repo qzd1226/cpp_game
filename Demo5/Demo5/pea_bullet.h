@@ -51,8 +51,12 @@ public:
 
 	void on_draw(const Camera& camera)const
 	{
+		std::cout << "屎壓紙崙徨起。。。。。。。。。。。。。。。" << std::endl;
 		if (valid)
+		{	
+			std::cout << position.x << std::endl;
 			putimage_alpha(camera, (int)position.x, (int)position.y, &img_pea);
+		}
 		else
 			animation_break.on_draw(camera, (int)position.x, (int)position.y);
 	}

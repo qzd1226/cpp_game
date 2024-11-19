@@ -7,6 +7,7 @@
 #include "atlas.h"
 #include "util.h"
 #include "player.h"
+#include "bullet.h"
 
 #include <windows.h>
 #pragma comment(lib, "Winmm.lib")
@@ -89,6 +90,7 @@ Scene* selector_scene = nullptr;
 
 Camera main_camera;
 
+std::vector<Bullet*> bullet_list;
 std::vector<Platform> platform_list;
 
 Player* player_1 = nullptr;
@@ -139,6 +141,7 @@ void load_game_resources() {
 
 	loadimage(&img_1P_cursor, _T("pvz/resources/1P_cursor.png"));
 	loadimage(&img_2P_cursor, _T("pvz/resources/2P_cursor.png"));
+	loadimage(&img_pea, _T("pvz/resources/pea.png"));
 
 	atlas_peashooter_idle_right.load_from_file(_T("pvz/resources/peashooter_idle_%d.png"), 9);
 	flip_atlas(atlas_peashooter_idle_right, atlas_peashooter_idle_left);

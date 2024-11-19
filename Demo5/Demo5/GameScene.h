@@ -19,11 +19,13 @@ extern IMAGE img_platform_small;
 extern Camera main_camera;
 
 extern std::vector<Platform> platform_list;
+extern std::vector<Bullet*> bullet_list;
 
 extern SceneManager scene_manager;
 
 extern Player* player_1;
 extern Player* player_2;
+
 
 class GameScene : public Scene
 {
@@ -83,7 +85,13 @@ public:
 
 		player_1->on_update(delta);
 		player_2->on_update(delta);
-		
+
+		for (auto* bullet : bullet_list) {
+			if (bullet) {
+				std::cout << "正在更新子弹" << std::endl;
+				bullet->on_update(delta);
+			}
+		}
 	}
 	void on_draw(const Camera& camera) {
 		
@@ -93,6 +101,13 @@ public:
 		for (const Platform& platform : platform_list)
 			platform.on_draw(camera);
 		
+		for (auto* bullet : bullet_list) {
+			if (bullet) { 
+				std::cout << "正在绘制子弹" << std::endl;
+				bullet->on_draw(camera);
+			}
+		}
+
 		if (is_debug)
 		{
 			settextcolor(RGB(255, 0, 0));

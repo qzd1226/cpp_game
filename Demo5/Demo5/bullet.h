@@ -79,7 +79,8 @@ public:
 	}
 
 	virtual void on_update(int delta){}
-	virtual void on_draw(const Camera& camera) const {}
+	virtual void on_draw(const Camera& camera) const {
+	}
 
 protected:
 	bool check_if_exceeds_screen() 
